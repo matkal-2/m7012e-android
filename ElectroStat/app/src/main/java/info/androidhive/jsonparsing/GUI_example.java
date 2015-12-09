@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,7 +32,8 @@ public class GUI_example extends AppCompatActivity {
         setContentView(R.layout.activity_gui_example);
 
         content    =   (TextView)findViewById( R.id.content );
-        content.setText("Request Response:");
+        content.setMovementMethod(new ScrollingMovementMethod());
+        content.setText("Request Regsponse:");
 
         Button postB = (Button) findViewById(R.id.button_post);
         postB.setOnClickListener(new View.OnClickListener() {

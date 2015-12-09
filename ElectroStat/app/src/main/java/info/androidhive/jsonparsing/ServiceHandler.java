@@ -42,9 +42,11 @@ public class ServiceHandler {
         Login   = "Lo";//login.getText().toString();
         Pass   = "Pa";//pass.getText().toString();
 
+        String state = "1";
+
         // Create data variable for sent values to server
 
-        String data = URLEncoder.encode("name", "UTF-8")
+        /*String data = URLEncoder.encode("name", "UTF-8")
                 + "=" + URLEncoder.encode(Name, "UTF-8");
 
         data += "&" + URLEncoder.encode("email", "UTF-8") + "="
@@ -55,7 +57,10 @@ public class ServiceHandler {
 
         data += "&" + URLEncoder.encode("pass", "UTF-8")
                 + "=" + URLEncoder.encode(Pass, "UTF-8");
+        */
 
+        String data = URLEncoder.encode("value", "UTF-8")
+                + "=" + URLEncoder.encode(state, "UTF-8");
         String text = "";
         BufferedReader reader=null;
 
@@ -64,8 +69,9 @@ public class ServiceHandler {
         {
 
             // Defined URL  where to send data
-            URL url = new URL("http://androidexample.com/media/webservice/httppost.php");
-            //URL url = new URL("https://www.reddit.com/robots.txt");
+            //URL url = new URL("http://androidexample.com/media/webservice/httppost.php");
+            //URL url = new URL("http://64.233.183.104/robots.txt");
+            URL url = new URL("http://192.168.1.34/rest/relay/1");
 
             // Send POST data request
 

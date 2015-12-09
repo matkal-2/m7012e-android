@@ -33,14 +33,19 @@
         android:layout_below="@+id/switch1"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="56dp" />
+        android:layout_marginTop="69dp" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="New Text"
         android:id="@+id/content"
+        android:maxLines="16"
+        android:scrollbars = "vertical"
+        android:background="@android:color/white"
+        android:textColor="@android:color/black"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
 </RelativeLayout>
