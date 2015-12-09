@@ -1,30 +1,26 @@
 package info.androidhive.jsonparsing;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 
 public class GUI_example extends AppCompatActivity {
 
     TextView content;
     String response;
-    final ServiceHandler sh = new ServiceHandler();
+    final ServiceHandler serviceHandler = new ServiceHandler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +29,7 @@ public class GUI_example extends AppCompatActivity {
 
         content    =   (TextView)findViewById( R.id.content );
         content.setMovementMethod(new ScrollingMovementMethod());
-        content.setText("Request Regsponse:");
+        content.setText("Request Response:");
 
         Button postB = (Button) findViewById(R.id.button_post);
         postB.setOnClickListener(new View.OnClickListener() {
@@ -49,14 +45,14 @@ public class GUI_example extends AppCompatActivity {
                         {
                            StringBuilder s = new StringBuilder();
                             s.append("Has Connection: ");
-                            boolean b = sh.hasActiveInternetConnection();
+                            boolean b = serviceHandler.hasActiveInternetConnection();
                             if(b)
                                 s.append("True");
                             else
                                 s.append("False");
 
                             try{
-                                s.append("\nContent:\n"+sh.GetText());
+                                s.append("\nContent:\n" + serviceHandler.setRelay("1", "1"));
                            }catch(UnsupportedEncodingException e){
                                 e.printStackTrace();
                             }
@@ -80,7 +76,18 @@ public class GUI_example extends AppCompatActivity {
             }
         });
 
-    };
+        /*Switch relay1 = (Switch) findViewById(R.id.switch1) ;
+        relay1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+
+
+            }
+            }
+        });*/
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
