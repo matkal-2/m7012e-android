@@ -32,48 +32,6 @@ public class GUI_example extends AppCompatActivity {
         content.setText("Request Response:");
 
 
-        Button postB = (Button) findViewById(R.id.button_post);
-        postB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CharSequence text = "";
-                text = "Async Connecting to server.";
-
-                new AsyncTask<Void, Void, String>() {
-                    @Override
-                    public String doInBackground(Void... params) {
-                        StringBuilder s = new StringBuilder();
-                        s.append("Has Connection: ");
-                        boolean b = serviceHandler.hasActiveInternetConnection();
-                        if (b)
-                            s.append("True");
-                        else
-                            s.append("False");
-
-                        try {
-                            s.append("\nContent:\n" + serviceHandler.setRelay("1", "1"));
-                        } catch (UnsupportedEncodingException e) {
-                            e.printStackTrace();
-                        }
-
-                        return s.toString();
-
-
-                    }
-
-                    @Override
-                    protected void onPostExecute(String result) {
-                        content.append("\nLength: " + result.length());
-                        content.append("\n" + result);
-                    }
-
-                }.execute();
-
-                Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG);
-                toast.show();
-            }
-        });
-
         Switch relay1 = (Switch) findViewById(R.id.switch1);
         relay1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -199,8 +157,9 @@ public class GUI_example extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_Settings) {
+            Intent intent = new Intent(this, Settings.class);
+            startActivity(intent);
         }
         else if (id == R.id.action_GUI_example) {
             Intent intent = new Intent(this, GUI_example.class);

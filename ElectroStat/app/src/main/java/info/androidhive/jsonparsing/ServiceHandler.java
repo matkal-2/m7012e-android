@@ -103,4 +103,8 @@ public class ServiceHandler{
     }
 
 
+    public String getRelay(String relay) throws UnsupportedEncodingException {
+        String data = "";
+        return sendRequest("http://"+SERVER_IP+"/rest/relay/"+relay, data, GET);
+    }
 }
