@@ -30,7 +30,7 @@ public class ServiceHandler{
     private static String LOG_TAG = "ServiceHandler";
     public final static int GET = 1;
     public final static int POST = 2;
-    private final static String SERVER_IP = "192.168.1.35";
+    public static String SERVER_IP = "192.168.1.35";
 
     public ServiceHandler() {
 
