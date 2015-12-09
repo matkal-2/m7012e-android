@@ -16,6 +16,7 @@ import java.net.URLEncoder;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,13 +24,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class ServiceHandler {
+public class ServiceHandler{
 
     static String response = null;
     private static String LOG_TAG = "ServiceHandler";
     public final static int GET = 1;
     public final static int POST = 2;
-    private final static String SERVER_IP = "192.168.1.34";
+    private final static String SERVER_IP = "192.168.1.35";
 
     public ServiceHandler() {
 

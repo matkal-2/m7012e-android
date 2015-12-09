@@ -30,10 +30,9 @@
         android:layout_height="wrap_content"
         android:text="Send Post"
         android:id="@+id/button_post"
-        android:layout_below="@+id/switch1"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="69dp" />
+        android:layout_above="@+id/content"
+        android:layout_alignLeft="@+id/content"
+        android:layout_alignStart="@+id/content" />
 
     <TextView
         android:layout_width="300dp"
@@ -44,8 +43,71 @@
         android:scrollbars = "vertical"
         android:background="@android:color/white"
         android:textColor="@android:color/black"
-        android:layout_centerVertical="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="59dp" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Relay 3"
+        android:id="@+id/switch3"
+        android:checked="false"
+        android:layout_above="@+id/switch6"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Relay 4"
+        android:id="@+id/switch4"
+        android:checked="false"
+        android:layout_below="@+id/switch2"
+        android:layout_alignLeft="@+id/switch2"
+        android:layout_alignStart="@+id/switch2"
+        android:layout_marginTop="63dp" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Relay 5"
+        android:id="@+id/switch5"
+        android:checked="false"
+        android:layout_below="@+id/switch6"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="56dp" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Relay 6"
+        android:id="@+id/switch6"
+        android:checked="false"
+        android:layout_below="@+id/switch4"
+        android:layout_alignLeft="@+id/switch4"
+        android:layout_alignStart="@+id/switch4"
+        android:layout_marginTop="85dp" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Relay 7"
+        android:id="@+id/switch7"
+        android:checked="false"
+        android:layout_above="@+id/switch5"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Relay 8"
+        android:id="@+id/switch8"
+        android:checked="false"
+        android:layout_alignTop="@+id/switch5"
+        android:layout_alignLeft="@+id/switch6"
+        android:layout_alignStart="@+id/switch6" />
 
 </RelativeLayout>
