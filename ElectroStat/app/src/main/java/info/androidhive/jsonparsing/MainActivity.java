@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,8 +36,10 @@ public class MainActivity extends AppCompatActivity {
         else if (id == R.id.action_GUI_example) {
             Intent intent = new Intent(this, GUI_example.class);
             startActivity(intent);
-
-
+        }
+        else if (id == R.id.action_Grapher_Activity) {
+            Intent intent = new Intent(this, Grapher.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

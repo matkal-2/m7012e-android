@@ -30,6 +30,8 @@ public class ServiceHandler{
     private static String LOG_TAG = "ServiceHandler";
     public final static int GET = 1;
     public final static int POST = 2;
+    public final static String ANALOG_INPUT = "ai";
+    public final static String ANALOG_OUTPUT = "ao";
     public static String SERVER_IP = "192.168.1.35";
 
     public ServiceHandler() {
@@ -84,6 +86,7 @@ public class ServiceHandler{
         return sendRequest("http://"+SERVER_IP+"/rest/relay/"+relay, data, POST);
     }
 
+
     public boolean hasActiveInternetConnection() {
        // if (isNetworkAvailable(context)) {
             try {
@@ -106,5 +109,10 @@ public class ServiceHandler{
     public String getRelay(String relay) throws UnsupportedEncodingException {
         String data = "";
         return sendRequest("http://"+SERVER_IP+"/rest/relay/"+relay, data, GET);
+    }
+
+    public String getAnalog(String analogIO, String device) throws UnsupportedEncodingException {
+        String data = "";
+        return sendRequest("http://"+SERVER_IP+"/rest/"+device+"/"+analogIO, data, GET);
     }
 }

@@ -1,20 +1,14 @@
 package info.androidhive.jsonparsing;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.io.UnsupportedEncodingException;
 
 public class GUI_example extends AppCompatActivity {
 
@@ -158,7 +152,7 @@ public class GUI_example extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so lon
+        // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
@@ -170,8 +164,10 @@ public class GUI_example extends AppCompatActivity {
         else if (id == R.id.action_GUI_example) {
             Intent intent = new Intent(this, GUI_example.class);
             startActivity(intent);
-
-
+        }
+        else if (id == R.id.action_Grapher_Activity) {
+            Intent intent = new Intent(this, Grapher.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

@@ -23,8 +23,9 @@
             android:label="GUI_TEST" />
         <activity
             android:name=".Settings"
-            android:label="@string/title_activity_settings">
-        </activity>
+            android:label="@string/title_activity_settings"></activity>
+        <activity android:name=".Grapher"
+            android:label="@string/title_activity_grapher"></activity>
     </application>
 
 </manifest>
