@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Settings extends AppCompatActivity {
     @Override
@@ -23,13 +24,15 @@ public class Settings extends AppCompatActivity {
         final EditText addrInputField = (EditText) findViewById(R.id.editText);
         final Button applyButton = (Button) findViewById(R.id.button2);
 
+        content.setText("Server Settings");
+
         addrInputField.setText(ServiceHandler.SERVER_IP);
 
         applyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ServiceHandler.SERVER_IP =addrInputField.getText().toString();
-
+                Toast.makeText(getApplicationContext(), "New Server IP applied", Toast.LENGTH_LONG).show();
             }
         });
     }

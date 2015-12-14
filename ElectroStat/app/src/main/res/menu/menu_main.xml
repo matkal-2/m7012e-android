@@ -3,6 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
     <item android:id="@+id/action_Settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/action_GUI_example" android:title="GUI_TEST"
+    <item android:id="@+id/action_GUI_example" android:title="Relay Control"
         android:orderInCategory="100" app:showAsAction="never" />
 </menu>
