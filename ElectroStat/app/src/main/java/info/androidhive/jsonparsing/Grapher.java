@@ -1,7 +1,7 @@
 package info.androidhive.jsonparsing;
 
-import android.app.Fragment;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,38 +12,47 @@ import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
+import java.io.UnsupportedEncodingException;
+
 public class Grapher extends AppCompatActivity {
 
     final ServiceHandler serviceHandler = new ServiceHandler();
+    private final Handler mHandler = new Handler();
+
+    private GraphView powerGraph;
+    private double powerGraphLastValue;
+    private Runnable mPowerTimer;
+    private LineGraphSeries<DataPoint> powerSeries;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grapher_);
 
-        GraphView graphView = (GraphView) findViewById(R.id.graph);
-        graphView.setTitle("Power usage");
-        GridLabelRenderer gridLabel = graphView.getGridLabelRenderer();
+        this.powerGraph = (GraphView) findViewById(R.id.graph);
+        this.powerGraph.setTitle("Power usage");
+        GridLabelRenderer gridLabel = this.powerGraph.getGridLabelRenderer();
         gridLabel.setHorizontalAxisTitle("Hours");
         gridLabel.setVerticalAxisTitle("kWh");
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(new DataPoint[] {
+        this.powerSeries = new LineGraphSeries<DataPoint>(new DataPoint[] {
                 new DataPoint(0, 1),
                 new DataPoint(1, 5),
                 new DataPoint(2, 3),
                 new DataPoint(3, 2),
                 new DataPoint(4, 6)
         });
-        graphView.getViewport().setYAxisBoundsManual(true);
-        graphView.getViewport().setMaxY(10.5);
-        graphView.getViewport().setMinY(0);
-       /* graphView.getViewport().setXAxisBoundsManual(true);
-        graphView.getViewport().setMaxX(24);
-        graphView.getViewport().setMinX(0);*/
-        graphView.addSeries(series);
+        this.powerGraph.getViewport().setYAxisBoundsManual(true);
+        this.powerGraph.getViewport().setMaxY(10.5);
+        this.powerGraph.getViewport().setMinY(0);
+        powerGraph.getViewport().setXAxisBoundsManual(true);
+        this.powerGraphLastValue = 0;
+        this.powerGraph.addSeries(this.powerSeries);
 
        // series.appendData(new DataPoint(5,7),false, 12);
 
-        new GetAnalogAsyncTask(serviceHandler, graphView, series, "1", ServiceHandler.ANALOG_INPUT).execute();
+        new GetAnalogAsyncTask(serviceHandler, powerGraph, powerSeries, "1", ServiceHandler.ANALOG_INPUT).execute();
     }
 
 
@@ -76,6 +85,11 @@ public class Grapher extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
     }
 
 }

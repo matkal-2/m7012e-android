@@ -13,6 +13,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.util.Random;
 
 import android.app.Activity;
 import android.content.Context;
@@ -23,6 +24,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class ServiceHandler{
 
@@ -114,5 +119,32 @@ public class ServiceHandler{
     public String getAnalog(String analogIO, String device) throws UnsupportedEncodingException {
         String data = "";
         return sendRequest("http://"+SERVER_IP+"/rest/"+device+"/"+analogIO, data, GET);
+    }
+
+    public JSONObject getPowerUsage(String analogIO, String device) throws UnsupportedEncodingException {
+        String data = "";
+        JSONArray jsonArray = new JSONArray();
+        JSONObject jsonContent = new JSONObject();
+        JSONObject jsonObj = new JSONObject();
+        Random rand = new Random();
+        int  n;
+        for (int i = 0; i<100;i++){
+            try {
+                jsonContent.put("id",i);
+                jsonContent.put("datetime",(i/3.14));
+                n = rand.nextInt(10);
+                jsonContent.put("voltage",n);
+                jsonArray.put(jsonContent);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            jsonObj.put("rows", jsonArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObj;
+        //return sendRequest("http://"+SERVER_IP+"/rest/"+device+"/"+analogIO, data, GET);
     }
 }
