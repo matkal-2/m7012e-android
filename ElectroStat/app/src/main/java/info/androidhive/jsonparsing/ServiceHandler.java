@@ -38,6 +38,7 @@ public class ServiceHandler{
     public final static String ANALOG_INPUT = "ai";
     public final static String ANALOG_OUTPUT = "ao";
     public static String SERVER_IP = "192.168.1.35";
+    public static String SERVER_PORT_POWER_USAGE = "1337";
 
     public ServiceHandler() {
 
@@ -121,30 +122,30 @@ public class ServiceHandler{
         return sendRequest("http://"+SERVER_IP+"/rest/"+device+"/"+analogIO, data, GET);
     }
 
-    public JSONObject getPowerUsage(String analogIO, String device) throws UnsupportedEncodingException {
+
+    public JSONArray getPowerUsage() throws UnsupportedEncodingException {
         String data = "";
-        JSONArray jsonArray = new JSONArray();
-        JSONObject jsonContent = new JSONObject();
-        JSONObject jsonObj = new JSONObject();
-        Random rand = new Random();
-        int  n;
-        for (int i = 0; i<100;i++){
-            try {
-                jsonContent.put("id",i);
-                jsonContent.put("datetime",(i/3.14));
-                n = rand.nextInt(10);
-                jsonContent.put("voltage",n);
-                jsonArray.put(jsonContent);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
+        JSONArray jsonArray;
         try {
-            jsonObj.put("rows", jsonArray);
+            String result = sendRequest("http://" + SERVER_IP + ":" + SERVER_PORT_POWER_USAGE + "/index.phtml", data, GET);
+            jsonArray = new JSONArray(result);
+            return jsonArray;
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return jsonObj;
-        //return sendRequest("http://"+SERVER_IP+"/rest/"+device+"/"+analogIO, data, GET);
+        return null;
+    }
+
+    private String generateJSON(){
+        String content ="[";
+        Random rand = new Random();
+        float voltage;
+        int hour = 0;
+        for (int i = 1+hour; i < 60+hour; i++){
+            voltage = rand.nextFloat() * 10;
+            content += "{id' : " + i + ", 'datetime' : '2015-12-14 20:"+i%60+":00', 'voltage' : "+voltage + " },";
+        }
+        content += "{id' : "+(60+ hour)%60+", 'datetime' : '2015-12-14 20:40:00', 'voltage' : 5 } ]";
+        return content;
     }
 }

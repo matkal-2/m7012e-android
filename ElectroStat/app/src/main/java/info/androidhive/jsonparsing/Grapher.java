@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
@@ -19,10 +21,11 @@ public class Grapher extends AppCompatActivity {
     final ServiceHandler serviceHandler = new ServiceHandler();
     private final Handler mHandler = new Handler();
 
-    private GraphView powerGraph;
+    public GraphView powerGraph, hourGraph;
+    public TextView content;
     private double powerGraphLastValue;
     private Runnable mPowerTimer;
-    private LineGraphSeries<DataPoint> powerSeries;
+    public LineGraphSeries<DataPoint> powerSeries, hourSeries;
 
 
 
@@ -30,6 +33,10 @@ public class Grapher extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grapher_);
+
+        content    =   (TextView)findViewById( R.id.textView4 );
+        content.setMovementMethod(new ScrollingMovementMethod());
+        content.setText("Request Response:");
 
         this.powerGraph = (GraphView) findViewById(R.id.graph);
         this.powerGraph.setTitle("Power usage");
@@ -52,7 +59,22 @@ public class Grapher extends AppCompatActivity {
 
        // series.appendData(new DataPoint(5,7),false, 12);
 
+        // Hour graph initializiationze
+        this.hourGraph = (GraphView)findViewById(R.id.graph_hour);
+        this.hourGraph.setTitle("Power used this hour");
+        GridLabelRenderer gridLabelHour = this.hourGraph.getGridLabelRenderer();
+        gridLabelHour.setHorizontalAxisTitle("Minutes");
+        gridLabelHour.setVerticalAxisTitle("kWh");
+        this.hourGraph.getViewport().setYAxisBoundsManual(true);
+        this.hourGraph.getViewport().setMaxY(10.5);
+        this.hourGraph.getViewport().setMinY(0);
+        this.hourGraph.getViewport().setXAxisBoundsManual(true);
+        this.hourGraph.getViewport().setMinX(0);
+        this.hourGraph.getViewport().setMaxX(60);
+
+
         new GetAnalogAsyncTask(serviceHandler, powerGraph, powerSeries, "1", ServiceHandler.ANALOG_INPUT).execute();
+        new GetPowerUsageAsyncTask(this).execute();
     }
 
 
