@@ -10,36 +10,34 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import org.json.JSONArray;
 
 import java.io.IOException;
-import java.util.Calendar;
+import java.util.Date;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
- * Created by Capsoize on 14.12.2015.
+ * Created by Capsoize on 16.12.2015.
  */
-public class GetPowerUsageAsyncTask extends AsyncTask<String, Void, JSONArray> {
-    Grapher grapher;
+public class GetPowerUsageByDateAsyncTask extends AsyncTask<String, Void, JSONArray> {
+    HistoryGrapher historyGrapher;
 
-    public GetPowerUsageAsyncTask(Grapher grapher){
+    public GetPowerUsageByDateAsyncTask(HistoryGrapher historyGrapher){
         super();
-        this.grapher = grapher;
+        this.historyGrapher = historyGrapher;
     }
 
     @Override
     protected JSONArray doInBackground(String... params) {
         JSONArray jsonArray = null;
-        Calendar date = Calendar.getInstance();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        String dateStr = format.format(date.getTime());
         try{
-            jsonArray = grapher.serviceHandler.getPowerUsage(dateStr, "minute");
+            jsonArray = historyGrapher.serviceHandler.getPowerUsage(HistoryGrapher.getDateFormatted(), "hour");
         }catch (IOException e){
             e.printStackTrace();
         }
         return jsonArray;
 
 
-}
+    }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
@@ -58,20 +56,30 @@ public class GetPowerUsageAsyncTask extends AsyncTask<String, Void, JSONArray> {
                 Calendar date = Calendar.getInstance();
                 DataPoint[] dataPoints = new DataPoint[jsonArray.length()];
 
+                historyGrapher.historyDayPlot.removeAllSeries();
+
                 // Debug printout
                 powerData = jsonArray.toString().substring(1, jsonArray.toString().length() - 1);
+                historyGrapher.dataPrinter.setText(HistoryGrapher.getDateFormatted());
 
                 // Go through all voltage data and add them to DataPoint array
                 for (int i = 0; i < jsonArray.length(); i++){
                     voltage = Float.parseFloat(jsonArray.getJSONObject(i).getString("voltage"));
+                    date.setTime(format.parse(jsonArray.getJSONObject(i).getString("datetime")));
 
-                    //time = date.get(Calendar.MINUTE);
-                    dataPoints[i] = new DataPoint(i, voltage );
+                    time = date.get(Calendar.HOUR_OF_DAY) + date.get(Calendar.MINUTE)*(0.6);
+
+                    dataPoints[i] = new DataPoint(time, voltage );
                 }
 
                 // debug
-                grapher.hourSeries = new LineGraphSeries<DataPoint>(dataPoints);
-                grapher.hourGraph.addSeries(grapher.hourSeries);
+                historyGrapher.historyDaySeries = new LineGraphSeries<DataPoint>(dataPoints);
+                historyGrapher.historyDayPlot.getViewport().setMinX(0);
+                historyGrapher.historyDayPlot.getViewport().setMaxX(24);
+                historyGrapher.historyDayPlot.addSeries(historyGrapher.historyDaySeries);
+            }
+            else{
+                historyGrapher.content.setText("Null object returned");
             }
         }catch (Exception e) {
             e.printStackTrace();

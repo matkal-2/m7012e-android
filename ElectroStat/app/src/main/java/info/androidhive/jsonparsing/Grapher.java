@@ -22,7 +22,6 @@ public class Grapher extends AppCompatActivity {
     private final Handler mHandler = new Handler();
 
     public GraphView powerGraph, hourGraph;
-    public TextView content;
     private double powerGraphLastValue;
     private Runnable mPowerTimer;
     public LineGraphSeries<DataPoint> powerSeries, hourSeries;
@@ -34,15 +33,10 @@ public class Grapher extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grapher_);
 
-        content    =   (TextView)findViewById( R.id.textView4 );
-        content.setMovementMethod(new ScrollingMovementMethod());
-        content.setText("Request Response:");
-
         this.powerGraph = (GraphView) findViewById(R.id.graph);
-        this.powerGraph.setTitle("Power usage");
+        this.powerGraph.setTitle("Power usage [kWh]");
         GridLabelRenderer gridLabel = this.powerGraph.getGridLabelRenderer();
         gridLabel.setHorizontalAxisTitle("Hours");
-        gridLabel.setVerticalAxisTitle("kWh");
         this.powerSeries = new LineGraphSeries<DataPoint>(new DataPoint[] {
                 new DataPoint(0, 1),
                 new DataPoint(1, 5),
@@ -61,13 +55,12 @@ public class Grapher extends AppCompatActivity {
 
         // Hour graph initializiationze
         this.hourGraph = (GraphView)findViewById(R.id.graph_hour);
-        this.hourGraph.setTitle("Power used this hour");
+        this.hourGraph.setTitle("Power used this hour [kWh]");
         GridLabelRenderer gridLabelHour = this.hourGraph.getGridLabelRenderer();
         gridLabelHour.setHorizontalAxisTitle("Minutes");
-        gridLabelHour.setVerticalAxisTitle("kWh");
-        this.hourGraph.getViewport().setYAxisBoundsManual(true);
+        /*this.hourGraph.getViewport().setYAxisBoundsManual(true);
         this.hourGraph.getViewport().setMaxY(10.5);
-        this.hourGraph.getViewport().setMinY(0);
+        this.hourGraph.getViewport().setMinY(0);*/
         this.hourGraph.getViewport().setXAxisBoundsManual(true);
         this.hourGraph.getViewport().setMinX(0);
         this.hourGraph.getViewport().setMaxX(60);
@@ -103,6 +96,10 @@ public class Grapher extends AppCompatActivity {
         }
         else if (id == R.id.action_Grapher_Activity) {
             Intent intent = new Intent(this, Grapher.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.action_Grapher_History){
+            Intent intent = new Intent(this, HistoryGrapher.class);
             startActivity(intent);
         }
 

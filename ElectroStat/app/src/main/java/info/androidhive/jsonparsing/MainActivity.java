@@ -41,6 +41,10 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, Grapher.class);
             startActivity(intent);
         }
+        else if (id == R.id.action_Grapher_History){
+            Intent intent = new Intent(this, HistoryGrapher.class);
+            startActivity(intent);
+        }
 
         return super.onOptionsItemSelected(item);
     }

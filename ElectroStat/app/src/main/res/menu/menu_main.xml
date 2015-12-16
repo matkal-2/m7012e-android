@@ -7,4 +7,6 @@
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/action_Grapher_Activity" android:title="Grapher"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_Grapher_History" android:title="History Grapher"
+        android:orderInCategory="100" app:showAsAction="never" />
 </menu>

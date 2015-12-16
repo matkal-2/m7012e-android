@@ -13,6 +13,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.util.Calendar;
 import java.util.Random;
 
 import android.app.Activity;
@@ -136,6 +137,20 @@ public class ServiceHandler{
         return null;
     }
 
+    public JSONArray getPowerUsage(String date, String format) throws UnsupportedEncodingException {
+        String data = "";
+        String argument = "?date=" + date + "&format="+format;
+        JSONArray jsonArray;
+        try {
+            String result = sendRequest("http://" + SERVER_IP + ":" + SERVER_PORT_POWER_USAGE + "/index.phtml"+argument, data, GET);
+            jsonArray = new JSONArray(result);
+            return jsonArray;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     private String generateJSON(){
         String content ="[";
         Random rand = new Random();
@@ -148,4 +163,6 @@ public class ServiceHandler{
         content += "{id' : "+(60+ hour)%60+", 'datetime' : '2015-12-14 20:40:00', 'voltage' : 5 } ]";
         return content;
     }
+
+
 }
