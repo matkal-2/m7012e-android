@@ -20,7 +20,7 @@
         </activity>
         <activity
             android:name=".GUI_example"
-            android:label="GUI_TEST" />
+            android:label="Relay Control" />
         <activity
             android:name=".Settings"
             android:label="@string/title_activity_settings" />
@@ -29,7 +29,7 @@
             android:label="@string/title_activity_grapher" />
         <activity
             android:name=".HistoryGrapher"
-            android:label="History Grapher :D"/>
+            android:label="History Grapher"/>
     </application>
 
 </manifest>
