@@ -13,6 +13,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.util.Calendar;
+import java.util.Random;
 
 import android.app.Activity;
 import android.content.Context;
@@ -24,13 +26,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class ServiceHandler{
 
     static String response = null;
     private static String LOG_TAG = "ServiceHandler";
     public final static int GET = 1;
     public final static int POST = 2;
-    private final static String SERVER_IP = "192.168.1.35";
+    public final static String ANALOG_INPUT = "ai";
+    public final static String ANALOG_OUTPUT = "ao";
+    public static String SERVER_IP = "192.168.1.35";
+    public static String SERVER_PORT_POWER_USAGE = "1337";
 
     public ServiceHandler() {
 
@@ -84,6 +93,7 @@ public class ServiceHandler{
         return sendRequest("http://"+SERVER_IP+"/rest/relay/"+relay, data, POST);
     }
 
+
     public boolean hasActiveInternetConnection() {
        // if (isNetworkAvailable(context)) {
             try {
@@ -107,4 +117,52 @@ public class ServiceHandler{
         String data = "";
         return sendRequest("http://"+SERVER_IP+"/rest/relay/"+relay, data, GET);
     }
+
+    public String getAnalog(String analogIO, String device) throws UnsupportedEncodingException {
+        String data = "";
+        return sendRequest("http://"+SERVER_IP+"/rest/"+device+"/"+analogIO, data, GET);
+    }
+
+
+    public JSONArray getPowerUsage() throws UnsupportedEncodingException {
+        String data = "";
+        JSONArray jsonArray;
+        try {
+            String result = sendRequest("http://" + SERVER_IP + ":" + SERVER_PORT_POWER_USAGE + "/index.phtml", data, GET);
+            jsonArray = new JSONArray(result);
+            return jsonArray;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public JSONArray getPowerUsage(String date, String format) throws UnsupportedEncodingException {
+        String data = "";
+        String argument = "?date=" + date + "&format="+format;
+        JSONArray jsonArray;
+        try {
+            String result = sendRequest("http://" + SERVER_IP + ":" + SERVER_PORT_POWER_USAGE + "/index.phtml"+argument, data, GET);
+            jsonArray = new JSONArray(result);
+            return jsonArray;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private String generateJSON(){
+        String content ="[";
+        Random rand = new Random();
+        float voltage;
+        int hour = 0;
+        for (int i = 1+hour; i < 60+hour; i++){
+            voltage = rand.nextFloat() * 10;
+            content += "{id' : " + i + ", 'datetime' : '2015-12-14 20:"+i%60+":00', 'voltage' : "+voltage + " },";
+        }
+        content += "{id' : "+(60+ hour)%60+", 'datetime' : '2015-12-14 20:40:00', 'voltage' : 5 } ]";
+        return content;
+    }
+
+
 }

@@ -1,20 +1,14 @@
 package info.androidhive.jsonparsing;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.io.UnsupportedEncodingException;
 
 public class GUI_example extends AppCompatActivity {
 
@@ -33,6 +27,7 @@ public class GUI_example extends AppCompatActivity {
 
 
         Switch relay1 = (Switch) findViewById(R.id.switch1);
+        new GetRelayAsyncTask(serviceHandler, relay1, "1").execute();
         relay1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -45,6 +40,7 @@ public class GUI_example extends AppCompatActivity {
         });
 
         Switch relay2 = (Switch) findViewById(R.id.switch2);
+        new GetRelayAsyncTask(serviceHandler, relay2, "2").execute();
         relay2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -58,6 +54,7 @@ public class GUI_example extends AppCompatActivity {
         });
 
         Switch relay3 = (Switch) findViewById(R.id.switch3);
+        new GetRelayAsyncTask(serviceHandler, relay3, "3").execute();
         relay3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -71,6 +68,7 @@ public class GUI_example extends AppCompatActivity {
         });
 
         Switch relay4 = (Switch) findViewById(R.id.switch4);
+        new GetRelayAsyncTask(serviceHandler, relay4, "4").execute();
         relay4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -84,6 +82,7 @@ public class GUI_example extends AppCompatActivity {
         });
 
         Switch relay5 = (Switch) findViewById(R.id.switch5);
+        new GetRelayAsyncTask(serviceHandler, relay5, "5").execute();
         relay5.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -97,32 +96,33 @@ public class GUI_example extends AppCompatActivity {
         });
 
         Switch relay6 = (Switch) findViewById(R.id.switch6);
+        new GetRelayAsyncTask(serviceHandler, relay6, "6").execute();
         relay6.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     new ChangeRelayAsyncTask(serviceHandler, content, "6", "1").execute();
-                }
-                else{
+                } else {
                     new ChangeRelayAsyncTask(serviceHandler, content, "6", "0").execute();
                 }
             }
         });
 
         Switch relay7 = (Switch) findViewById(R.id.switch7);
+        new GetRelayAsyncTask(serviceHandler, relay7,"7").execute();
         relay7.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     new ChangeRelayAsyncTask(serviceHandler, content, "7", "1").execute();
-                }
-                else{
+                } else {
                     new ChangeRelayAsyncTask(serviceHandler, content, "7", "0").execute();
                 }
             }
         });
 
         Switch relay8 = (Switch) findViewById(R.id.switch8);
+        new GetRelayAsyncTask(serviceHandler, relay8, "8").execute();
         relay8.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -152,7 +152,7 @@ public class GUI_example extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so lon
+        // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
@@ -164,8 +164,14 @@ public class GUI_example extends AppCompatActivity {
         else if (id == R.id.action_GUI_example) {
             Intent intent = new Intent(this, GUI_example.class);
             startActivity(intent);
-
-
+        }
+        else if (id == R.id.action_Grapher_Activity) {
+            Intent intent = new Intent(this, Grapher.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.action_Grapher_History){
+            Intent intent = new Intent(this, HistoryGrapher.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

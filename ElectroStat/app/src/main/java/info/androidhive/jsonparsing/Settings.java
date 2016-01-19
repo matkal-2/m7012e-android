@@ -2,20 +2,36 @@ package info.androidhive.jsonparsing;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class Settings extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        final TextView content = (TextView) findViewById(R.id.textView3);
+        final EditText addrInputField = (EditText) findViewById(R.id.editText);
+        final Button applyButton = (Button) findViewById(R.id.button2);
+
+        content.setText("Server Settings");
+
+        addrInputField.setText(ServiceHandler.SERVER_IP);
+
+        applyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ServiceHandler.SERVER_IP = addrInputField.getText().toString();
+                Toast.makeText(getApplicationContext(), "New Server IP applied", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
@@ -40,8 +56,10 @@ public class Settings extends AppCompatActivity {
         else if (id == R.id.action_GUI_example) {
             Intent intent = new Intent(this, GUI_example.class);
             startActivity(intent);
-
-
+        }
+        else if (id == R.id.action_Grapher_Activity) {
+            Intent intent = new Intent(this, Grapher.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
