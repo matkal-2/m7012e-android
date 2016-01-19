@@ -78,3 +78,4 @@ public class GetPowerUsageAsyncTask extends AsyncTask<String, Void, JSONArray> {
         }
     }
 }
+//commet
