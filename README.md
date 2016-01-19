@@ -1,5 +1,5 @@
 # m7012e-android
 
 # Installation
-* Download pkg file
+* Compile pkg file with android studois
 * Run pkg
